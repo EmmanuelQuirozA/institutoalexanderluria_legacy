@@ -66,6 +66,11 @@
                     <h2>Inicio</h2>
                     <ul class="nav navbar-right panel_toolbox" style="margin-top: 14px;">
                       <?php if ($cInicio==1) { ?>
+                        <div class="small_panel_toolbox" style="margin-right: 10px; min-width: 220px;">
+                          <select id="printerSelector" class="form-control" style="min-width: 220px;">
+                            <option selected disabled>Cargando impresoras...</option>
+                          </select>
+                        </div>
                         <div class="small_panel_toolbox dropdown show">
                           <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Acciones
