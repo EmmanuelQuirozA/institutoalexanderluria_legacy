@@ -7,6 +7,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       <a href="ayuda.php" class="dropdown-item">Ayuda</a>
       <a href="perfil.php" class="dropdown-item">Perfil</a>
+      <a href="pruebaImpresora.php" class="dropdown-item">Prueba de impresora</a>
       <a href="../build/logout.php" class="dropdown-item">Cerrar sesión</a>
     </div>
   </div>
