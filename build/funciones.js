@@ -50,16 +50,7 @@ function enableActionButtons(){
 
 if (typeof window.getSelectedPrinter !== "function") {
   window.getSelectedPrinter = function(){
-    var selector = $('#printerSelector');
-    var selectedFromSelector = selector.length ? selector.val() : '';
-    var stored = localStorage.getItem('selectedPrinter') || '';
-
-    if (selectedFromSelector && selectedFromSelector !== stored) {
-      localStorage.setItem('selectedPrinter', selectedFromSelector);
-      return selectedFromSelector;
-    }
-
-    return selectedFromSelector || stored;
+    return 'impresoraTermica';
   };
 }
 
