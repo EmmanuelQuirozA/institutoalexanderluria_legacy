@@ -4,11 +4,16 @@ require __DIR__ . '/ticket/autoload.php'; //Nota: si renombraste la carpeta a al
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\PrintConnectors\CupsPrintConnector;
 
-$nombre_impresora = "impresoraTermica"; 
+$nombre_impresora = isset($_POST['nombre_impresora']) && trim($_POST['nombre_impresora']) !== "" ? trim($_POST['nombre_impresora']) : "impresoraTermica";
 
 
-$connector = new WindowsPrintConnector($nombre_impresora);
+if (stripos(PHP_OS, 'WIN') === 0) {
+	$connector = new WindowsPrintConnector($nombre_impresora);
+} else {
+	$connector = new CupsPrintConnector($nombre_impresora);
+}
 $printer = new Printer($connector);
 
 # Vamos a alinear al centro lo próximo que imprimamos

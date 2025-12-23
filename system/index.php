@@ -65,35 +65,36 @@
                   <div class="x_title">
                     <h2>Inicio</h2>
                     <ul class="nav navbar-right panel_toolbox" style="margin-top: 14px;">
-                      <?php if ($cInicio==1) { 
-                      echo'
+                      <?php if ($cInicio==1) { ?>
+                        <div class="small_panel_toolbox" style="margin-right: 10px; min-width: 220px;">
+                          <select id="printerSelector" class="form-control" style="min-width: 220px;">
+                            <option selected disabled>Cargando impresoras...</option>
+                          </select>
+                        </div>
                         <div class="small_panel_toolbox dropdown show">
                           <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Acciones
                           </a>
                         
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                      '; if ($cInicio==1) { echo'
                             <a class="dropdown-item registrarPago">Registrar pago</a>
                             <a class="dropdown-item registrarSaldoAlumnos">Registrar saldo alumnos</a>
                             <a class="dropdown-item registrarSaldoTrabajadores">registrar saldo trabajadores</a>
-                      '; }; if ($dInicio==1) { echo'
-                            <a class="dropdown-item devolverSaldoAlumno">Devolver saldo alumnos</a>
-                            <a class="dropdown-item devolverSaldoTrabajador">Devolver saldo trabajadores</a>
-                      '; } echo'
-                      
+                            <?php if ($dInicio==1) { ?>
+                              <a class="dropdown-item devolverSaldoAlumno">Devolver saldo alumnos</a>
+                              <a class="dropdown-item devolverSaldoTrabajador">Devolver saldo trabajadores</a>
+                            <?php } ?>
                           </div>
                         </div>
 
-                      '; if ($cInicio==1) { echo'
                         <button type="button" class="large_panel_toolbox registrarPago btn btn-info actionBtn" data-toggle="modal" title="Añadir pago escolar" style="margin-left: 10px; font-size: 14px;">Añadir pago escolar</button>
                         <button type="button" class="large_panel_toolbox registrarSaldoAlumnos btn btn-info actionBtn" data-toggle="modal" title="Agregar saldo de alimentos alumnos" style="margin-left: 10px; font-size: 14px;">Agregar saldo de alimentos alumnos</button>
                         <button type="button" class="large_panel_toolbox registrarSaldoTrabajadores btn btn-info actionBtn" data-toggle="modal" title="Agregar saldo de alimentos trabajadores" style="margin-left: 10px; font-size: 14px;">Agregar saldo de alimentos trabajadores</button>
-                      '; }; if ($dInicio==1) { echo'
-                        <button type="button" class="large_panel_toolbox devolverSaldoAlumno btn btn-info actionBtn" data-toggle="modal" title="Devolver saldo alumnos" style="margin-left: 10px; font-size: 14px;">Devolver saldo alumnos</button>
-                        <button type="button" class="large_panel_toolbox devolverSaldoTrabajador btn btn-info actionBtn" data-toggle="modal" title="Devolver saldo trabajadores" style="margin-left: 10px; font-size: 14px;">Devolver saldo trabajadores</button>
-                      '; } 
-                       } ?>
+                        <?php if ($dInicio==1) { ?>
+                          <button type="button" class="large_panel_toolbox devolverSaldoAlumno btn btn-info actionBtn" data-toggle="modal" title="Devolver saldo alumnos" style="margin-left: 10px; font-size: 14px;">Devolver saldo alumnos</button>
+                          <button type="button" class="large_panel_toolbox devolverSaldoTrabajador btn btn-info actionBtn" data-toggle="modal" title="Devolver saldo trabajadores" style="margin-left: 10px; font-size: 14px;">Devolver saldo trabajadores</button>
+                        <?php } ?>
+                      <?php } ?>
                     </ul>
                     <div class="clearfix"></div>
                   </div>
