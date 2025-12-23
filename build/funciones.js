@@ -48,6 +48,21 @@ function enableActionButtons(){
   }
 }
 
+if (typeof window.getSelectedPrinter !== "function") {
+  window.getSelectedPrinter = function(){
+    var selector = $('#printerSelector');
+    var selectedFromSelector = selector.length ? selector.val() : '';
+    var stored = localStorage.getItem('selectedPrinter') || '';
+
+    if (selectedFromSelector && selectedFromSelector !== stored) {
+      localStorage.setItem('selectedPrinter', selectedFromSelector);
+      return selectedFromSelector;
+    }
+
+    return selectedFromSelector || stored;
+  };
+}
+
 
 //---------------------------------------------------------------------------------------------LOGIN---------------------------------------------------------------------------------
 $("#loginForm").validate({
@@ -2451,7 +2466,8 @@ function crearPago(alumno,nivelEscolar,gradoyGrupo,concepto,cicloEscolar,mesCole
 									referencia:referencia,
 									observaciones:observaciones,
 									estatusPago:estatusPago,
-									tipoPago:"pagoGeneral"
+									tipoPago:"pagoGeneral",
+									nombre_impresora:getSelectedPrinter()
 								},
 								success: function(response){
 										// if(response==1){

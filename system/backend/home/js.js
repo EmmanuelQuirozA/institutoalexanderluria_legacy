@@ -156,6 +156,72 @@ $(document).on("click", ".alumnoSaldoSearch", function () {
   });
 });
 
+function getSelectedPrinter(){
+  const selector = $('#printerSelector');
+  const selectedFromSelector = selector.length ? selector.val() : '';
+  const stored = localStorage.getItem('selectedPrinter') || '';
+
+  if (selectedFromSelector && selectedFromSelector !== stored) {
+    localStorage.setItem('selectedPrinter', selectedFromSelector);
+    return selectedFromSelector;
+  }
+
+  return selectedFromSelector || stored;
+}
+
+function cargarImpresorasDisponibles(){
+  const selector = $('#printerSelector');
+  if (!selector.length) {
+    return;
+  }
+
+  selector
+    .prop('disabled', true)
+    .html('<option selected disabled>Cargando impresoras...</option>');
+
+  $.ajax({
+    url:"backend/home/printers.php",
+    type:"GET",
+    dataType:"json",
+    success: function(response){
+      selector.empty();
+      const printers = response.printers || [];
+      if (printers.length === 0) {
+        selector.append('<option value=\"\">No se detectaron impresoras</option>');
+        return;
+      }
+
+      selector.append('<option value=\"\">Selecciona una impresora</option>');
+      printers.forEach(function(printerName){
+        const cleanName = printerName.trim();
+        selector.append('<option value=\"'+cleanName+'\">'+cleanName+'</option>');
+      });
+
+      const storedPrinter = localStorage.getItem('selectedPrinter');
+      if (storedPrinter && printers.includes(storedPrinter)) {
+        selector.val(storedPrinter);
+      } else if (printers.length === 1) {
+        selector.val(printers[0]);
+        localStorage.setItem('selectedPrinter', printers[0]);
+      }
+    },
+    error: function(){
+      selector.html('<option value=\"\">No se pudieron cargar las impresoras</option>');
+    },
+    complete: function(){
+      selector.prop('disabled', false);
+    }
+  });
+
+  selector.on('change', function(){
+    localStorage.setItem('selectedPrinter', $(this).val());
+  });
+}
+
+$(document).ready(function(){
+  cargarImpresorasDisponibles();
+});
+
 // BUSQUEDA AJAX DE ALUMNO
 $("#devolucion_saldo_nombreAlumnoCompleto").keyup(function () {
 	let searchText = $(this).val();
@@ -1046,7 +1112,8 @@ function reply_click(clicked_val){
                       idPersona:idPersona,
                       saldo:saldo,
                       cantidad:clicked_val,
-                      tipoPago:"saldoAlumno"},
+                      tipoPago:"saldoAlumno",
+                      nombre_impresora:getSelectedPrinter()},
                     success: function(response){
                       // alert(response)
                       // if(response==1){
@@ -1197,7 +1264,8 @@ function reply_click(clicked_val){
                           idPersona:idPersona,
                           saldo:saldo,
                           cantidad:cantidadIngresada.value.cantidad,
-                          tipoPago:"saldoAlumno"},
+                          tipoPago:"saldoAlumno",
+                          nombre_impresora:getSelectedPrinter()},
                         success: function(response){
                           // alert(response)
                           // if(response==1){
@@ -1330,7 +1398,8 @@ function reply_click_trabajador(clicked_val){
                       idPersona:idPersona,
                       saldo:saldo,
                       cantidad:clicked_val,
-                      tipoPago:"saldoTrabajador"},
+                      tipoPago:"saldoTrabajador",
+                      nombre_impresora:getSelectedPrinter()},
                     success: function(response){
                       // alert(response)
                       // if(response==1){
@@ -1477,7 +1546,8 @@ function reply_click_trabajador(clicked_val){
                         idPersona:idPersona,
                         saldo:saldo,
                         cantidad:cantidadIngresada.value.cantidad,
-                        tipoPago:"saldoTrabajador"},
+                        tipoPago:"saldoTrabajador",
+                        nombre_impresora:getSelectedPrinter()},
                       success: function(response){
                         // alert(response)
                         // if(response==1){
@@ -1656,7 +1726,8 @@ function devolucionSaldoAlumno(clicked_val){
                           idPersona:idPersona,
                           saldo:saldo,
                           cantidad:cantidadIngresada.value.cantidad*-1,
-                          tipoPago:"saldoDevoluAlumno"},
+                          tipoPago:"saldoDevoluAlumno",
+                          nombre_impresora:getSelectedPrinter()},
                         success: function(response){
                           // alert(response)
                           // if(response==1){
@@ -1837,7 +1908,8 @@ function devolucionSaldoTrabajador(clicked_val){
                           idPersona:idPersona,
                           saldo:saldo,
                           cantidad:cantidadIngresada.value.cantidad*-1,
-                          tipoPago:"saldoDevoluTrabajador"},
+                          tipoPago:"saldoDevoluTrabajador",
+                          nombre_impresora:getSelectedPrinter()},
                         success: function(response){
                           // alert(response)
                           // if(response==1){
